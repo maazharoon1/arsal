@@ -48,17 +48,6 @@ npm run typecheck
 npm run build
 ```
 
-With the dev server running and Chrome installed:
-
-```sh
-node reference/check-services.mjs
-node reference/check-gallery.mjs
-node reference/inspect-about.mjs
-node reference/check-polish.mjs
-```
-
-Browser checks require network access for public Cloudinary images. They cover routes, filters, gallery controls and responsive layouts; screenshots go to `reference/`.
-
 ## Assets
 
 Hero portrait extracted with imagegen from the supplied reference. About portrait and retained local example images extracted from the supplied desktop animation. Original reference media remains available. Service covers use the supplied Cloudinary assets; full portfolio uploads are still pending.

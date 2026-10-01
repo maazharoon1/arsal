@@ -83,6 +83,4 @@ npm run build         # Production build
 npm run format        # Formatting
 ```
 
-Dev server ke saath `node reference/check-services.mjs` services/images check karta hai; `node reference/check-gallery.mjs` viewer/zoom/drag check karta hai. Installed Chrome aur public images ke liye network access chahiye.
-
 Cloudinary ke liye `.env.example` dekhein. Sirf public cloud name chahiye; API secret frontend mein mat likhein. Get in Touch filhaal demo Upwork homepage use karta hai; real profile link `data/contact.ts` mein replace karein.
