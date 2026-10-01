@@ -48,7 +48,7 @@ export function HeroSection() {
           alt="Arsal, graphic designer, in a navy suit"
           width={1270}
           height={1239}
-          priority
+          preload
           className="hero-portrait"
           sizes="(max-width: 700px) 85vw, 66vw"
         />

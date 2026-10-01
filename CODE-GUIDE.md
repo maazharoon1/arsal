@@ -1,72 +1,88 @@
-# Code samajhne ka simple guide
+﻿# Code samajhne ka simple guide
 
-Sab se pehle `app/page.tsx` kholein. Yeh file homepage ke sections ko order mein dikhati hai. Har section ka actual code uski apni file mein hai.
+Homepage ka order `app/page.tsx` mein hai. Har section apni component file mein hai. Text aur portfolio data `data/` folder se edit hota hai.
 
-## Kis cheez ke liye kaunsi file?
+## Cloudinary upload ke baad object kahan banana hai?
 
-| Kaam                                               | File                                        |
-| -------------------------------------------------- | ------------------------------------------- |
-| Sections ka order badalna                          | `app/page.tsx`                              |
-| Browser tab ka title aur description               | `app/layout.tsx`                            |
-| Logo, navigation, mobile menu                      | `components/sections/site-header.tsx`       |
-| Main heading, portrait, hero background            | `components/sections/hero-section.tsx`      |
-| About ki text aur creative process                 | `components/sections/about-section.tsx`     |
-| Apna background aur introduction edit karna        | `data/about.ts`                             |
-| Project names, descriptions, images, process steps | `data/portfolio.ts`                         |
-| Projects filters aur project popup                 | `components/sections/portfolio-section.tsx` |
-| Neeche wala Start a project banner                 | `components/sections/contact-section.tsx`   |
-| Contact form, copy aur download functions          | `components/contact-dialog.tsx`             |
-| Footer aur original video popup                    | `components/sections/site-footer.tsx`       |
-| Colors, spacing, fonts, mobile layout              | `app/globals.css`                           |
-| Scroll par fade-in animation                       | `hooks/use-scroll-reveal.ts`                |
-| Reusable button aur popup                          | `components/ui/`                            |
-| Images aur videos                                  | `public/`                                   |
+**`data/portfolio.ts` kholein.** `services` array mein har service ka object pehle se hai. Us service ke **`images: []` ke andar** har uploaded image ka object add karein. Alag file ya naya top-level object banana zaroori nahi.
 
-## React ka flow
+Misal: Logo Design ke existing object ko is tarah update karein. Yeh example IDs hain; pehle images upload karein:
 
-- **Component**: page ka ek hissa, jaise `HeroSection`.
-- **Props**: component ko di jane wali values. `children` uske andar ka content hota hai.
-- **useState**: badalne wali value. Projects ka `filter` decide karta hai kaunsi category dikhani hai.
-- **map**: list ke har item ke liye UI banata hai. Projects ki list se cards bante hain.
-- **useRef**: input ka reference rakhta hai. Contact form mein textarea ki value copy karne ke kaam aata hai.
-- **useEffect**: browser mein setup aur cleanup karta hai. Scroll animation ka observer is se chalta hai.
-- **use client**: React state, events aur browser features ke liye client boundary. Homepage ke imported components bhi is boundary ke andar chalte hain.
+```ts
+{
+  code: 'LG',
+  slug: 'logo-design',
+  name: 'Logo Design',
+  category: 'Branding',
+  heroId: 'LGH',
+  description: 'Distinctive marks that express your brand’s personality, with the clarity to work at every size.',
+  images: [
+    { publicId: 'LG-01', alt: 'Crystal Salon brand logo' },
+    { publicId: 'LG-02', alt: 'Second brand logo presentation' },
+  ],
+},
+```
 
-## Service cards aur Cloudinary galleries
+1. Cloudinary par upload karein aur image ka **exact Public ID** copy karein.
+2. `data/portfolio.ts` mein relevant service dhoondein, misal `code: 'LG'`.
+3. Uske `images` array mein `{ publicId: 'LG-01', alt: 'Image ki description' }` add karein. Objects ke darmiyan comma lagayein.
+4. Save karein. Local website refresh hogi; live website ke liye dobara build/deploy karein.
 
-- `data/portfolio.ts`: categories, 19 services, hero IDs aur gallery images.
-- `components/sections/portfolio-section.tsx`: category filters, cards aur Load More.
-- `app/services/[slug]/page.tsx`: har service ka separate page aur title.
-- `components/service-detail.tsx`: service page ka layout aur related-service tabs.
-- `components/service-gallery.tsx`: gallery tiles, placeholders, fullscreen popup, zoom aur next/previous controls.
-- `app/gallery.css`: gallery aur fullscreen popup ki responsive styling.
-- `components/service-artwork.tsx`: image loading aur Documentation ka placeholder.
-- `app/services.css`: in pages ki navy theme aur responsive styling.
+`heroId` service card ki cover image hai; `images` andar wali gallery hai. Gallery ka order isi array ka order hai. Pehli real image add karne par demo placeholders hat jate hain. `images: []` ho to preview layout dikhta hai. Uploads automatically discover nahi hote.
 
-## Example: portfolio image add karna
+Public ID full URL nahi hai. Aam tor par extension ke baghair hoti hai, misal `LG-01`. Cloudinary mein jo exact Public ID dikhe wahi use karein. Agar ID mein folder prefix hai, poora ID dein, misal `portfolio/LG-01`; sirf display folder ka naam andazay se add na karein. `alt` mein image ki meaningful description likhein.
 
-1. Cloudinary par image upload karein, misal `LG-01`.
-2. `data/portfolio.ts` mein Logo Design ke `images: []` ko `images: [{ publicId: 'LG-01', alt: 'Logo project ki description' }]` se replace karein.
-3. Gallery apne aap demo preview tiles se aapki images mein change hogi; image click par fullscreen preview khulega. Arrows se next/previous, zoom button se enlarge aur Escape se close karein.
-4. Hero badalne ke liye `heroId` edit karein. Documentation ka `null` placeholder hai; real image aane par `DOCH` ya actual public ID likhein.
+| Service       | Hero        | Gallery examples   |
+| ------------- | ----------- | ------------------ |
+| Logo Design   | `LGH`       | `LG-01`, `LG-02`   |
+| Social Media  | `SMH`       | `SM-01`, `SM-02`   |
+| Packaging     | `PKH`       | `PK-01`, `PK-02`   |
+| Documentation | Abhi `null` | `DOC-01`, `DOC-02` |
 
-Cloudinary images automatically list nahi hotin; sirf `images` array mein listed uploads dikhte hain. Har subcategory ki numbering 01 se shuru karein. Folder use ho to full public ID likhein. Logo Animation hero original file use karta hai taake Cloudinary frame-size limit ki error na aaye.
+Har service ki numbering 01 se shuru hoti hai. Documentation ka `heroId: null` abhi concept placeholder hai; upload ke baad actual Public ID likhein.
 
-## CSS kaise parhein?
+## File map
 
-`globals.css` mein Header, Hero, About, Projects, Contact, Dialogs aur Animations ke comments hain. Aakhir mein media queries hain: desktop, tablet, mobile aur extra-small mobile. Mobile design badalne ke liye relevant media query dekhein.
+| Kaam                                       | File                                                   |
+| ------------------------------------------ | ------------------------------------------------------ |
+| Homepage sections ka order                 | `app/page.tsx`                                         |
+| Mobile ka short About                      | `components/sections/about-section.tsx`                |
+| Full About page                            | `app/about/page.tsx`                                   |
+| Introduction, background, specialties      | `data/about.ts`                                        |
+| Upwork status, rate, location, languages   | `data/profile.ts`                                      |
+| Upwork link                                | `data/contact.ts`                                      |
+| Services aur image objects                 | `data/portfolio.ts`                                    |
+| Discover / Explore / Refine / Deliver text | `data/design-process.ts`                               |
+| Header aur mobile menu                     | `components/sections/site-header.tsx`                  |
+| Service filters aur Load More              | `components/sections/portfolio-section.tsx`            |
+| Service route                              | `app/services/[slug]/page.tsx`                         |
+| Service layout aur tabs                    | `components/service-detail.tsx`                        |
+| Gallery aur fullscreen viewer              | `components/service-gallery.tsx`                       |
+| Cloudinary loading aur fallback            | `components/service-artwork.tsx`                       |
+| Zoom, double-click/tap aur drag            | `hooks/use-gallery-zoom.ts`                            |
+| Mobile process icon progress               | `hooks/use-mobile-process.ts`                          |
+| Footer                                     | `components/sections/site-footer.tsx`                  |
+| Base theme                                 | `app/globals.css`                                      |
+| Service / gallery / About styles           | `app/services.css`, `app/gallery.css`, `app/about.css` |
+| Typography aur motion polish               | `app/polish.css`                                       |
+| Fonts aur shared metadata                  | `app/layout.tsx`, `app/fonts/`                         |
+
+## Animation aur performance
+
+Homepage aur service layout server components hain. Menu, filters aur gallery jaisi interactive cheezein browser JavaScript use karti hain. `components/page-motion.tsx` har route par `hooks/use-scroll-reveal.ts` chalata hai. `.reveal` element scroll par ek dafa animate hota hai; Load More cards bhi observe hote hain. JavaScript na chale tab bhi content visible rehta hai.
+
+Reduced-motion preference par animations band hoti hain. Process cards sirf mobile par stack hote hain. Fonts local WOFF2 files hain; browser Google Fonts se files fetch nahi karta. Next Image local portraits ke responsive sizes banata hai. Unused contact form aur purana project/video popup JSX remove hai.
 
 ## Commands
 
 ```sh
-npm run dev           # Website local browser mein chalayein
-npm run format        # Poora editable code format karein
-npm run format:check  # Formatting verify karein
-npm run lint          # Code rules check karein
-npm run typecheck     # TypeScript errors check karein
-npm run build         # Production build banayein
+npm run dev           # Local website
+npm run lint          # Code rules
+npm run typecheck     # TypeScript errors
+npm run build         # Production build
+npm run format        # Formatting
 ```
 
-Prettier dependencies, generated Next.js files aur lockfile ko skip karta hai. Config `.prettierrc.json` mein hai.
+Dev server ke saath `node reference/check-services.mjs` services/images check karta hai; `node reference/check-gallery.mjs` viewer/zoom/drag check karta hai. Installed Chrome aur public images ke liye network access chahiye.
 
-Contact form filhaal sirf text brief download karta hai. Email bhejne ka backend connected nahi hai.
+Cloudinary ke liye `.env.example` dekhein. Sirf public cloud name chahiye; API secret frontend mein mat likhein. Get in Touch filhaal demo Upwork homepage use karta hai; real profile link `data/contact.ts` mein replace karein.

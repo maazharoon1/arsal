@@ -14,7 +14,9 @@ for (const [, block] of css.matchAll(/\/\* latin \*\/\s*(@font-face \{[\s\S]*?\}
   console.log(`${family} ${style}: ${bytes.length} bytes`);
 }
 for (const family of ['manrope', 'cormorantgaramond']) {
-  const response = await fetch(`https://raw.githubusercontent.com/google/fonts/main/ofl/${family}/OFL.txt`);
+  const response = await fetch(
+    `https://raw.githubusercontent.com/google/fonts/main/ofl/${family}/OFL.txt`,
+  );
   if (!response.ok) throw new Error(`License download failed: ${response.status}`);
   await writeFile(`app/fonts/${family}-OFL.txt`, await response.text());
 }

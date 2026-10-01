@@ -10,6 +10,7 @@ type ServiceArtworkProps = {
   title: string;
   priority?: boolean;
   large?: boolean;
+  sizes?: string;
 };
 
 // Existing .env.local ka USERNAME field cloud name ke liye support kiya hai.
@@ -22,6 +23,7 @@ export function ServiceArtwork({
   title,
   priority = false,
   large = false,
+  sizes,
 }: ServiceArtworkProps) {
   const [failedId, setFailedId] = useState<string | null>(null);
 
@@ -81,6 +83,7 @@ export function ServiceArtwork({
         width={800}
         height={800}
         unoptimized
+        sizes={sizes}
         priority={priority}
         className="service-cloud-image"
         onError={() => setFailedId(publicId)}
@@ -95,7 +98,7 @@ export function ServiceArtwork({
       alt={title}
       width={large ? 1600 : 800}
       height={large ? 1600 : 800}
-      sizes={large ? '(max-width: 700px) 90vw, 80vw' : '(max-width: 700px) 90vw, 45vw'}
+      sizes={sizes ?? (large ? '90vw' : '(max-width: 700px) 90vw, 45vw')}
       priority={priority}
       className="service-cloud-image"
       onError={() => setFailedId(publicId)}

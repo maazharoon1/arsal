@@ -84,7 +84,12 @@ export function ServiceGallery({ service }: { service: Service }) {
     return item.placeholder ? (
       <GalleryPlaceholder number={index + 1} name={service.name} />
     ) : (
-      <ServiceArtwork publicId={item.publicId} title={item.alt} large={large} />
+      <ServiceArtwork
+        publicId={item.publicId}
+        title={item.alt}
+        large={large}
+        sizes={large ? '90vw' : '(max-width: 1000px) 44vw, 29vw'}
+      />
     );
   }
 

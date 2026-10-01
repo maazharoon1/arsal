@@ -172,3 +172,11 @@ h3 {
     transform: none;
   }
 }
+
+/* Mobile stack ka motion icon tak rahe; cards par reveal transform na lagayein. */
+@media (max-width: 700px) and (min-height: 501px) {
+  .design-process-step.reveal.reveal-pending {
+    opacity: 1;
+    transform: none;
+  }
+}
