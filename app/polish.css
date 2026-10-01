@@ -1,0 +1,174 @@
+/* Final polish: readable type, small interactions, and motion without heavy libraries. */
+body {
+  line-height: 1.6;
+}
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 200;
+  padding: 12px 20px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 8px;
+  transform: translateY(-150%);
+}
+.skip-link:focus {
+  transform: none;
+}
+#main-content:focus {
+  outline: none;
+}
+.navigation {
+  font-size: 13px;
+  font-weight: 500;
+}
+.wordmark {
+  font-weight: 500;
+  letter-spacing: -1.5px;
+}
+.eyebrow {
+  font-weight: 600;
+}
+.hero-copy {
+  animation: none;
+}
+.hero-copy h1 > span {
+  animation: rise-in 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-copy h1 > span:nth-child(2) {
+  animation-delay: 110ms;
+}
+.hero-copy h1 > span:nth-child(3) {
+  animation-delay: 220ms;
+}
+.hero-copy > .eyebrow,
+.hero-copy > p,
+.hero-copy > .button {
+  animation: rise-in 900ms 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.page-intro {
+  animation: rise-in 750ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.service-card {
+  animation: none;
+}
+.service-card:nth-child(even),
+.gallery-tile:nth-child(3n + 2) {
+  transition-delay: 70ms;
+}
+.gallery-tile:nth-child(3n) {
+  transition-delay: 140ms;
+}
+.service-card-caption h3 {
+  font-size: clamp(28px, 2.5vw, 36px);
+}
+.service-filters button,
+.service-sibling-tabs a {
+  font-weight: 500;
+  min-height: 42px;
+}
+.service-next small {
+  font-family: var(--font-body), sans-serif;
+}
+.button,
+.text-link,
+.snapshot-link,
+.service-back {
+  gap: 12px;
+}
+.button svg,
+.text-link svg,
+.service-back svg {
+  transition: transform 250ms ease;
+}
+.button:hover svg,
+.text-link:hover svg {
+  transform: translateX(4px);
+}
+.service-back:hover svg {
+  transform: translateX(-4px);
+}
+.gallery-lightbox-tools button,
+.gallery-prev,
+.gallery-next,
+.gallery-lightbox .dialog-close {
+  transition:
+    background 180ms ease,
+    border-color 180ms ease;
+}
+.gallery-lightbox-tools button:hover,
+.gallery-prev:hover,
+.gallery-next:hover,
+.gallery-lightbox .dialog-close:hover {
+  background: #ffffff24;
+  border-color: #ffffff55;
+}
+.design-process-card-copy p {
+  font-size: 14px;
+}
+.footer-invitation h2 {
+  max-width: 750px;
+  margin-inline: auto;
+}
+@media (hover: hover) {
+  .gallery-tile:hover .gallery-placeholder .placeholder-mark {
+    scale: 1.06;
+  }
+  .placeholder-mark {
+    transition: scale 400ms ease;
+  }
+}
+@media (max-width: 700px) {
+  body::before {
+    display: none;
+  }
+  .navigation {
+    font-size: 15px;
+  }
+  .hero-copy > .eyebrow {
+    font-size: 8px;
+  }
+  .hero-copy > p {
+    font-size: clamp(11px, 2.8vw, 15px);
+  }
+  .hero-copy > .button {
+    font-size: 10px;
+    min-height: 40px;
+  }
+  .service-filters button {
+    font-size: 11px;
+  }
+  .services-heading > p,
+  .service-detail-heading p,
+  .design-process-heading > p {
+    font-size: 14px;
+  }
+  .service-card-caption .eyebrow {
+    font-size: 9px;
+  }
+  .gallery-tile-caption {
+    font-size: 10px;
+  }
+  .footer-contact-button {
+    min-height: 48px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal.reveal-pending {
+    opacity: 1;
+    transform: none;
+  }
+}
